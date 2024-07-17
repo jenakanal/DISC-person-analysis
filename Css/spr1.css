@@ -1,0 +1,158 @@
+*{
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+
+}
+html{
+  font-family: cursive fantasy monospace sans-serif;
+  font-size:20pt;
+  font-family:sans-serif;
+
+}
+body{
+  margin-left: 15px;
+	margin-right: 15px;
+}
+.reslt{
+  display:none;
+}
+.dsply{
+  display:block;
+}
+.hd{
+  display:none;
+}
+
+img{
+  width:100%;
+  display: block;
+  margin-top:15px;
+
+}
+h1{
+  color: #fff;
+  background-color: #F3AD32;
+  margin:20px auto;
+  text-align: center;
+  padding: 10px;
+  border-radius:40px;
+}
+h3 , h4{
+  margin: 20px;
+  text-align: justify;
+}
+.qs{
+display: flex;
+border: 2px solid #b7b2a9 ;
+margin-bottom:20px;
+}
+p{
+  width:20%;
+  padding:10px;
+  font-size:2rem;
+  text-align: center;
+}
+form{
+  width:80%;
+  padding:10px 15px;
+  border-right: 2px solid #b7b2a9 ;
+}
+label{
+  width:100%;
+  font-size:1.2rem;
+  display: block;
+  padding:8px
+}
+input{
+  margin-left:5px;
+}
+
+button{
+  display:block;
+  text-decoration: none;
+  background-color:#645454;
+  color:#fff;
+  padding:10px 20px;
+  margin-top:50px;
+  margin-right: auto;
+  margin-left: 50px;
+  margin-bottom:20px;
+  border-radius:40px;
+  text-align: center;
+  border:none;
+}
+a{
+  display:block;
+  text-decoration: none;
+  margin-top:10px;
+  margin-bottom:10px;
+  text-align:left;
+  margin-left:20px;
+  color:#000;
+  font-size:1.5rem;
+}
+h5 , h6{
+  font-size:1.5rem;
+  margin-bottom:20px;
+}
+h4{
+  font-size:1.3rem;
+  margin-bottom:20px;
+  color: #f00;
+}
+h3{
+  color:#f00;
+  font-size:1.2rem;
+}
+li{
+  list-style-type:none;
+  font-size:1rem;
+  padding:5px;
+}
+i{
+  margin-left:10px;
+}
+@media (min-width: 992px) {
+	body{
+		width: 940px;
+  }
+  p{
+    width:10%;
+    font-size:1.5rem;
+  }
+  form{
+    width:90%;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  label{
+    width:48%;
+    font-size:1.2rem;
+
+  }
+}
+@media (min-width: 1200px) {
+	body {
+		width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+	}
+h1{
+  width:50%;
+}
+  p{
+    width:5%;
+    font-size:1.2rem;
+  }
+  form{
+    width:95%;
+    display: flex;
+  }
+  label{
+    width:25%;
+    font-size:1rem;
+
+  }
+
+}
