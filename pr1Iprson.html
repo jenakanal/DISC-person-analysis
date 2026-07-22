@@ -1,54 +1,137 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="en" dir="rtl">
-  <head>
-    <meta charset="utf-8">
-    <title>project 1</title>
-        <link rel="stylesheet" href="Css/spr1.css" />
-        <link rel="stylesheet" href="Css/all.css" />
-  </head>
-  <body>
-      <img src="imges/bg3.webp" alt="">
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الشخص الاجتماعي - DISC</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="Css/all.css" />
+    <link rel="stylesheet" href="Css/spr1.css" />
+    <style>
+        body {
+            background: #f0f2f5;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .personality-page {
+            max-width: 700px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+        .personality-page .back-btn {
+            display: inline-block;
+            color: #6b7280;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: 0.2s;
+        }
+        .personality-page .back-btn:hover {
+            color: #1a1a2e;
+        }
+        .personality-page .back-btn i {
+            margin-left: 8px;
+        }
+        .personality-page h2 {
+            font-size: 2.2rem;
+            color: #f59e0b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .personality-page h2 i {
+            font-size: 2rem;
+        }
+        .personality-page h3 {
+            color: #374151;
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .personality-page h3 i {
+            color: #10b981;
+        }
+        .personality-page h3.weakness i {
+            color: #ef4444;
+        }
+        .personality-page ul {
+            list-style: none;
+            padding: 0;
+        }
+        .personality-page ul li {
+            color: #4b5563;
+            padding: 0.4rem 0;
+            padding-right: 1.8rem;
+            position: relative;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .personality-page ul li::before {
+            content: '▸';
+            position: absolute;
+            right: 0;
+            color: #10b981;
+            font-weight: 700;
+        }
+        .personality-page .weakness-list li::before {
+            color: #ef4444;
+        }
+        .personality-page .decision-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            border-right: 4px solid #f59e0b;
+        }
+        .personality-page .decision-box p {
+            color: #374151;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .personality-page .decision-box i {
+            color: #f59e0b;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="personality-page">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-right"></i> العودة للاختبار</a>
+        <h2><i class="fas fa-users" style="color:#f59e0b;"></i> الشخص الاجتماعي</h2>
+        
+        <h3><i class="fas fa-check-circle"></i> نقاط القوة</h3>
+        <ul>
+            <li>لبق ومتحدث جيد</li>
+            <li>يخلق جوا مسليا</li>
+            <li>يترك انطباع جيد</li>
+            <li>مٌقنع</li>
+            <li>حماسى</li>
+            <li>متفائل</li>
+            <li>كثير المودة والاصدقاء</li>
+        </ul>
 
+        <h3 class="weakness"><i class="fas fa-exclamation-circle" style="color:#ef4444;"></i> نقاط الضعف</h3>
+        <ul class="weakness-list">
+            <li>لا يتتبع الاشياء</li>
+            <li>يتصرف باندفاع</li>
+            <li>يتورط كثيرا</li>
+            <li>يبالغ فى تقدير النتائج</li>
+            <li>لا يخوض فى التفاصيل</li>
+            <li>يتلاعب بالالفاظ</li>
+            <li>عدم الالتزام بالمواعيد</li>
+        </ul>
 
-        <h1>دراسة النمط الشخصى</h1>
-        <section class="II">
-          <h2>الشخص الاجتماعى</h2>
-          <h3>نقاط القوة</h3>
-          <ul>
-            <li><i class="fa-solid fa-square-caret-left"></i>لبق ومتحدث جيد</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>يخلق جوا مسليا</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>يترك انطباع جيد </li>
-            <li><i class="fa-solid fa-square-caret-left"></i>مٌقنع</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>حماسى</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>متفائل</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>كثير المودة والاصدقاء</li>
-
-          </ul>
-          <h3>نقاط الضعف</h3>
-          <ul>
-            <li><i class="fa-solid fa-square-caret-left"></i>لا يتتبع الاشياء</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>يتصرف باندفاع</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>يتورط كثيرا</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>يبالغ فى تقدير النتائج</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>لا يخوض فى التفاصيل</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>يتلاعب بالالفاظ</li>
-            <li><i class="fa-solid fa-square-caret-left"></i>عدم الالتزام بالمواعيد</li>
-          </ul>
-          <h4>اتخاذ القرار .. استعد ..اطلق .. صوب</h4>
-        </section>
-
-
-
-
-
-
-
-
-
-
-
-
-        <script type="text/javascript"src="Js/jpr1.js"></script>
-  </body>
+        <div class="decision-box">
+            <p><i class="fas fa-bullseye"></i> اتخاذ القرار .. استعد ..اطلق .. صوب</p>
+        </div>
+    </div>
+</body>
 </html>
