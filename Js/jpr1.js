@@ -131,4 +131,224 @@
             weaknesses: [
                 'حساس للنقد',
                 'يبالغ فى الاحتياط',
-                'يفت
+                'يفتقر للتقائية',
+                'صارم بشكل مفرط',
+                'يبحث عن العيوب',
+                'شكاك',
+                'كثير النقد'
+            ],
+            decision: 'اتخاذ القرار .. استعد ..صوب .. صوب'
+        }
+    };
+
+    // ===== المتغيرات =====
+    let answers = {};
+    const totalQuestions = questionsData.length;
+    const container = document.getElementById('questionsContainer');
+    const resultArea = document.getElementById('resultArea');
+    const questionsWrapper = document.getElementById('questionsWrapper');
+    const answeredSpan = document.getElementById('answeredCount');
+    const progressFill = document.getElementById('progressFill');
+
+    // ===== عناصر المودال =====
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalTitle = document.getElementById('modalTitle');
+    const strengthsList = document.getElementById('strengthsList');
+    const weaknessesList = document.getElementById('weaknessesList');
+    const decisionText = document.getElementById('decisionText');
+
+    // ===== بناء الأسئلة =====
+    function renderQuestions() {
+        let html = '';
+        const classes = ['opt-d', 'opt-i', 'opt-s', 'opt-c'];
+        const letters = ['D', 'I', 'S', 'C'];
+        
+        questionsData.forEach((q, index) => {
+            const qNum = index + 1;
+            html += `
+                <div class="question-card" data-q="${qNum}">
+                    <div class="q-number">${qNum}</div>
+                    <div class="options-group">
+                        ${q.options.map((opt, i) => `
+                            <label class="${classes[i]}">
+                                <input type="radio" name="q${qNum}" value="${q.values[i]}" />
+                                ${opt}
+                                <span class="letter-badge">${letters[i]}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+
+        document.querySelectorAll('.options-group input[type="radio"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const parentCard = this.closest('.question-card');
+                const qNum = parentCard.dataset.q;
+                answers[qNum] = this.value;
+                updateProgress();
+            });
+        });
+    }
+
+    // ===== تحديث التقدم =====
+    function updateProgress() {
+        const count = Object.keys(answers).length;
+        answeredSpan.textContent = count;
+        const percent = (count / totalQuestions) * 100;
+        progressFill.style.width = percent + '%';
+    }
+
+    // ===== حساب النتيجة =====
+    function calculateResult() {
+        if (Object.keys(answers).length < totalQuestions) {
+            alert(`⚠️ الرجاء الإجابة على جميع الأسئلة (${totalQuestions} سؤالاً).`);
+            return null;
+        }
+        const counts = { D: 0, I: 0, S: 0, C: 0 };
+        for (let i = 1; i <= totalQuestions; i++) {
+            const val = answers[i];
+            if (val && counts.hasOwnProperty(val)) counts[val]++;
+        }
+        return counts;
+    }
+
+    // ===== عرض التفاصيل في المودال =====
+    function showPersonalityDetails(letter) {
+        const details = personalityDetails[letter];
+        if (!details) return;
+
+        // تعيين العنوان
+        modalTitle.innerHTML = `
+            <i class="${details.icon}" style="color:${details.color};"></i>
+            <span style="color:${details.color};">الشخص ${details.name}</span>
+        `;
+
+        // تعيين نقاط القوة
+        strengthsList.innerHTML = details.strengths.map(item => 
+            `<li><i class="fas fa-check" style="color:#00d2d3;"></i> ${item}</li>`
+        ).join('');
+
+        // تعيين نقاط الضعف
+        weaknessesList.innerHTML = details.weaknesses.map(item => 
+            `<li><i class="fas fa-times" style="color:#ff6b6b;"></i> ${item}</li>`
+        ).join('');
+
+        // تعيين نص القرار
+        decisionText.textContent = details.decision;
+
+        // إظهار المودال
+        modalOverlay.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // ===== إغلاق المودال =====
+    function closeModal() {
+        modalOverlay.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+
+    // ===== عرض النتيجة =====
+    function showResult() {
+        const counts = calculateResult();
+        if (!counts) return;
+
+        // البادجات
+        const badgesHtml = Object.keys(counts).map(key => {
+            const iconMap = {
+                'D': 'fa-flag',
+                'I': 'fa-users',
+                'S': 'fa-heart',
+                'C': 'fa-search'
+            };
+            return `
+                <span class="badge ${key.toLowerCase()}">
+                    <i class="fas ${iconMap[key]}"></i>
+                    ${key} <span class="count">${counts[key]}</span>
+                </span>
+            `;
+        }).join('');
+        document.getElementById('scoreBadges').innerHTML = badgesHtml;
+
+        // أعلى حرفين
+        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        let topLetters = sorted.slice(0, 2).map(item => item[0]);
+        if (sorted.length > 2 && sorted[1][1] === sorted[2][1]) {
+            topLetters.push(sorted[2][0]);
+        }
+
+        // البطاقات
+        const cardsContainer = document.getElementById('personalityCards');
+        let cardsHtml = '';
+        topLetters.forEach(letter => {
+            const info = personalityDetails[letter];
+            if (!info) return;
+            cardsHtml += `
+                <div class="pers-card ${info.cls}" data-letter="${letter}">
+                    <div class="card-title">
+                        <i class="${info.icon}"></i>
+                        ${info.name} (${letter})
+                    </div>
+                    <div class="card-desc">${info.desc}</div>
+                    <div class="card-link"><i class="fas fa-arrow-left"></i> تفاصيل أكثر</div>
+                </div>
+            `;
+        });
+        cardsContainer.innerHTML = cardsHtml || '<div class="no-result">لم نتمكن من تحديد الشخصية</div>';
+
+        // إضافة مستمع للأحداث على البطاقات
+        document.querySelectorAll('.pers-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const letter = this.dataset.letter;
+                showPersonalityDetails(letter);
+            });
+        });
+
+        resultArea.classList.add('show');
+        questionsWrapper.classList.add('hidden');
+        resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // ===== إعادة التعيين =====
+    function resetTest() {
+        answers = {};
+        document.querySelectorAll('.options-group input[type="radio"]').forEach(input => {
+            input.checked = false;
+        });
+        updateProgress();
+        resultArea.classList.remove('show');
+        questionsWrapper.classList.remove('hidden');
+        document.getElementById('appContainer').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ===== ربط الأحداث =====
+    function init() {
+        renderQuestions();
+        updateProgress();
+        
+        document.getElementById('resultBtn').addEventListener('click', showResult);
+        document.getElementById('resetBtn').addEventListener('click', resetTest);
+        
+        // إغلاق المودال
+        modalClose.addEventListener('click', closeModal);
+        modalOverlay.addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        
+        // إغلاق المودال بالضغط على ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('show')) {
+                closeModal();
+            }
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
