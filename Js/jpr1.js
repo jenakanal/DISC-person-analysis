@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    // ===== الأسئلة =====
+    // ===== الأسئلة الـ 24 =====
     const questionsData = [
         { options: ['متحفظ لا يشارك', 'مؤثر', 'حذر', 'معبر'], values: ['S', 'D', 'C', 'I'] },
         { options: ['ريادى / رائد', 'سديد / دقيق', 'مُحمس / مشوق', 'مكتفى / قنوع'], values: ['D', 'C', 'I', 'S'] },
@@ -29,14 +29,15 @@
         { options: ['متسامح', 'يتمسك بالتقليد / نمطى', 'مؤثر / مُحرك / محفز', 'موجه'], values: ['S', 'C', 'I', 'D'] }
     ];
 
-    // ===== بيانات الشخصيات مع التفاصيل الكاملة =====
+    // ===== بيانات الشخصيات =====
     const personalityDetails = {
         D: {
             name: 'القيادي',
             icon: 'fa-solid fa-flag',
-            color: '#ff6b6b',
+            color: '#ef4444',
             cls: 'd',
             desc: 'شخصية قيادية، حازمة، تحب التحدي. تتخذ قرارات سريعة وتتحمل المسؤولية.',
+            page: 'pr1Dprson.html',
             strengths: [
                 'الانجاز الفورى',
                 'مثابر',
@@ -62,9 +63,10 @@
         I: {
             name: 'الاجتماعي',
             icon: 'fa-solid fa-users',
-            color: '#feca57',
+            color: '#f59e0b',
             cls: 'i',
             desc: 'شخصية اجتماعية، محبة للمرح، مؤثرة ومقنعة. تتمتع بشعبية وتخلق جواً من التفاؤل.',
+            page: 'pr1lprson.html',
             strengths: [
                 'لبق ومتحدث جيد',
                 'يخلق جوا مسليا',
@@ -88,9 +90,10 @@
         S: {
             name: 'الودود',
             icon: 'fa-solid fa-heart',
-            color: '#00d2d3',
+            color: '#10b981',
             cls: 's',
             desc: 'شخصية ودودة، صبورة، مخلصة. مستمع جيد وتبني علاقات قوية ومستقرة.',
+            page: 'pr1Sprson.html',
             strengths: [
                 'ثابت',
                 'مستمع جيد',
@@ -116,9 +119,10 @@
         C: {
             name: 'المدقق',
             icon: 'fa-solid fa-magnifying-glass',
-            color: '#54a0ff',
+            color: '#3b82f6',
             cls: 'c',
             desc: 'شخصية دقيقة، تحليلية، منظمة. تركز على التفاصيل وتتخذ قرارات مدروسة.',
+            page: 'pr1Cprson.html',
             strengths: [
                 'مدقق ويركز على التفاصيل',
                 'يترك انطباع جيد',
@@ -220,26 +224,21 @@
         const details = personalityDetails[letter];
         if (!details) return;
 
-        // تعيين العنوان
         modalTitle.innerHTML = `
             <i class="${details.icon}" style="color:${details.color};"></i>
             <span style="color:${details.color};">الشخص ${details.name}</span>
         `;
 
-        // تعيين نقاط القوة
         strengthsList.innerHTML = details.strengths.map(item => 
-            `<li><i class="fas fa-check" style="color:#00d2d3;"></i> ${item}</li>`
+            `<li><i class="fas fa-check" style="color:#10b981;"></i> ${item}</li>`
         ).join('');
 
-        // تعيين نقاط الضعف
         weaknessesList.innerHTML = details.weaknesses.map(item => 
-            `<li><i class="fas fa-times" style="color:#ff6b6b;"></i> ${item}</li>`
+            `<li><i class="fas fa-times" style="color:#ef4444;"></i> ${item}</li>`
         ).join('');
 
-        // تعيين نص القرار
         decisionText.textContent = details.decision;
 
-        // إظهار المودال
         modalOverlay.classList.add('show');
         document.body.style.overflow = 'hidden';
     }
@@ -255,7 +254,6 @@
         const counts = calculateResult();
         if (!counts) return;
 
-        // البادجات
         const badgesHtml = Object.keys(counts).map(key => {
             const iconMap = {
                 'D': 'fa-flag',
@@ -272,39 +270,29 @@
         }).join('');
         document.getElementById('scoreBadges').innerHTML = badgesHtml;
 
-        // أعلى حرفين
         const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
         let topLetters = sorted.slice(0, 2).map(item => item[0]);
         if (sorted.length > 2 && sorted[1][1] === sorted[2][1]) {
             topLetters.push(sorted[2][0]);
         }
 
-        // البطاقات
         const cardsContainer = document.getElementById('personalityCards');
         let cardsHtml = '';
         topLetters.forEach(letter => {
             const info = personalityDetails[letter];
             if (!info) return;
             cardsHtml += `
-                <div class="pers-card ${info.cls}" data-letter="${letter}">
+                <a href="${info.page}" target="_blank" class="pers-card ${info.cls}" data-letter="${letter}">
                     <div class="card-title">
                         <i class="${info.icon}"></i>
                         ${info.name} (${letter})
                     </div>
                     <div class="card-desc">${info.desc}</div>
-                    <div class="card-link"><i class="fas fa-arrow-left"></i> تفاصيل أكثر</div>
-                </div>
+                    <div class="card-link"><i class="fas fa-arrow-left"></i> اعرف المزيد</div>
+                </a>
             `;
         });
         cardsContainer.innerHTML = cardsHtml || '<div class="no-result">لم نتمكن من تحديد الشخصية</div>';
-
-        // إضافة مستمع للأحداث على البطاقات
-        document.querySelectorAll('.pers-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const letter = this.dataset.letter;
-                showPersonalityDetails(letter);
-            });
-        });
 
         resultArea.classList.add('show');
         questionsWrapper.classList.add('hidden');
@@ -331,13 +319,11 @@
         document.getElementById('resultBtn').addEventListener('click', showResult);
         document.getElementById('resetBtn').addEventListener('click', resetTest);
         
-        // إغلاق المودال
         modalClose.addEventListener('click', closeModal);
         modalOverlay.addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
         
-        // إغلاق المودال بالضغط على ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && modalOverlay.classList.contains('show')) {
                 closeModal();
